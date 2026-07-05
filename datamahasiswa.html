@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Mahasiswa - CRUD</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+        h2 {
+            margin: 20px 0 10px 0;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .form-group label {
+            width: 90px;
+            font-size: 14px;
+        }
+        .form-group input, .form-group select {
+            width: 180px;
+            padding: 4px;
+            border: 1px solid #767676;
+            border-radius: 2px;
+            font-size: 14px;
+        }
+        .btn-container {
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+        button {
+            padding: 4px 10px;
+            margin-right: 5px;
+            background-color: #efefef;
+            border: 1px solid #767676;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        button:hover {
+            background-color: #e5e5e5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #767676;
+            padding: 6px 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Data Mahasiswa</h2>
+    
+    <div class="form-group">
+        <label for="nim">NIM:</label>
+        <input type="text" id="nim">
+    </div>
+    
+    <div class="form-group">
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama">
+    </div>
+    
+    <div class="form-group">
+        <label for="jurusan">Jurusan:</label>
+        <select id="jurusan">
+            <option value="">Pilih Jurusan</option>
+            <option value="Sistem Informasi">Sistem Informasi</option>
+            <option value="Teknik Informatika">Teknik Informatika</option>
+            <option value="Teknik Elektro">Teknik Elektro</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="fakultas">Fakultas:</label>
+        <select id="fakultas">
+            <option value="">Pilih Fakultas</option>
+            <option value="Teknik">Teknik</option>
+            <option value="Ilmu Komputer">Ilmu Komputer</option>
+        </select>
+    </div>
+
+    <div class="btn-container">
+        <button onclick="tambahMahasiswa()">Tambah Mahasiswa</button>
+        <button onclick="updateMahasiswa()">Update Data Mahasiswa</button>
+    </div>
+
+    <h2>Daftar Mahasiswa</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">NIM</th>
+                <th style="width: 15%;">Nama</th>
+                <th style="width: 30%;">Jurusan</th>
+                <th style="width: 25%;">Fakultas</th>
+                <th style="width: 15%;">Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tabel-mahasiswa">
+           
+        </tbody>
+    </table>
+
+    <script>
+        // Variabel global untuk menyimpan baris data yang sedang diedit
+        let barisYangDiedit = null;
+
+        // 1. FUNGSI TAMBAH MAHASISWA
+        function tambahMahasiswa() {
+            let nim = document.getElementById('nim').value.trim();
+            let nama = document.getElementById('nama').value.trim();
+            let jurusan = document.getElementById('jurusan').value;
+            let fakultas = document.getElementById('fakultas').value;
+
+            // Validasi input tidak boleh kosong
+            if(nim === "" || nama === "" || jurusan === "" || fakultas === "") {
+                alert("Semua data harus diisi terlebih dahulu!");
+                return;
+            }
+
+            let tabel = document.getElementById('tabel-mahasiswa');
+            let barisBaru = tabel.insertRow();
+
+            barisBaru.innerHTML = `
+                <td>${nim}</td>
+                <td>${nama}</td>
+                <td>${jurusan}</td>
+                <td>${fakultas}</td>
+                <td>
+                    <button onclick="editRow(this)">Edit</button>
+                    <button onclick="deleteRow(this)">Delete</button>
+                </td>
+            `;
+
+            kosongkanForm();
+        }
+
+        // 2. FUNGSI EDIT (Mengambil data dari tabel ke input form)
+        function editRow(tombol) {
+            // Ambil baris (tr) tempat tombol edit diklik
+            barisYangDiedit = tombol.parentElement.parentElement;
+            alert(barisYangDiedit);
+           
+
+            // Masukkan data dari tabel kembali ke form input di atas
+            document.getElementById('nim').value = barisYangDiedit.cells[0].innerText;
+            document.getElementById('nama').value = barisYangDiedit.cells[1].innerText;
+            document.getElementById('jurusan').value = barisYangDiedit.cells[2].innerText;
+            document.getElementById('fakultas').value = barisYangDiedit.cells[3].innerText;
+        }
+
+        // 3. FUNGSI UPDATE DATA (Menyimpan perubahan dari form kembali ke tabel)
+        function updateMahasiswa() {
+            // Cek apakah user sudah mengklik tombol 'Edit' terlebih dahulu
+            if (barisYangDiedit === null) {
+                alert("Pilih data yang ingin diedit dengan mengklik tombol 'Edit' di tabel terlebih dahulu!");
+                return;
+            }
+
+            let nim = document.getElementById('nim').value.trim();
+            let nama = document.getElementById('nama').value.trim();
+            let jurusan = document.getElementById('jurusan').value;
+            let fakultas = document.getElementById('fakultas').value;
+
+            if(nim === "" || nama === "" || jurusan === "" || fakultas === "") {
+                alert("Data update tidak boleh ada yang kosong!");
+                return;
+            }
+
+            // Timpa data lama di tabel dengan data baru yang ada di form
+            barisYangDiedit.cells[0].innerText = nim;
+            barisYangDiedit.cells[1].innerText = nama;
+            barisYangDiedit.cells[2].innerText = jurusan;
+            barisYangDiedit.cells[3].innerText = fakultas;
+
+            // Reset form dan status edit
+            kosongkanForm();
+            barisYangDiedit = null;
+            alert("Data berhasil diperbarui!");
+        }
+
+        // 4. FUNGSI DELETE (Menghapus baris)
+        function deleteRow(tombol) {
+            if(confirm("Apakah Anda yakin ingin menghapus data mahasiswa ini?")) {
+                let baris = tombol.parentElement.parentElement;
+                baris.remove();
+                
+                // Jika sedang mengedit baris yang dihapus, reset formnya
+                if(baris === barisYangDiedit) {
+                    kosongkanForm();
+                    barisYangDiedit = null;
+                }
+            }
+        }
+
+        // Fungsi pembantu untuk mengosongkan form input
+        function kosongkanForm() {
+            document.getElementById('nim').value = "";
+            document.getElementById('nama').value = "";
+            document.getElementById('jurusan').value = "";
+            document.getElementById('fakultas').value = "";
+        }
+    </script>
+</body>
+</html>
