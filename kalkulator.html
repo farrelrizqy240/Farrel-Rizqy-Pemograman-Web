@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Kalkulator Sederhana</title>
+
+<style>
+body{
+    font-family: Arial;
+    text-align:center;
+    margin-top:50px;
+}
+
+.container{
+    width:300px;
+    margin:auto;
+    padding:20px;
+    border:1px solid #ccc;
+    border-radius:10px;
+}
+
+input{
+    width:90%;
+    padding:10px;
+    margin:5px;
+}
+
+button{
+    padding:10px 15px;
+    margin:5px;
+    cursor:pointer;
+}
+
+#hasil{
+    margin-top:20px;
+    font-size:20px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Kalkulator</h2>
+
+    <input type="number" id="angka1" placeholder="Angka 1">
+    <input type="number" id="angka2" placeholder="Angka 2">
+
+    <br>
+
+    <button onclick="hitung('+')">+</button>
+    <button onclick="hitung('-')">-</button>
+    <button onclick="hitung('*')">*</button>
+    <button onclick="hitung('/')">/</button>
+
+    <div id="hasil">Hasil : 0</div>
+</div>
+
+<script>
+function hitung(operator){
+
+    let a = parseFloat(document.getElementById("angka1").value);
+    let b = parseFloat(document.getElementById("angka2").value);
+
+    let hasil;
+
+    switch(operator){
+        case '+':
+            hasil = a + b;
+            break;
+
+        case '-':
+            hasil = a - b;
+            break;
+
+        case '*':
+            hasil = a * b;
+            break;
+
+        case '/':
+            hasil = a / b;
+            break;
+    }
+
+    document.getElementById("hasil").innerHTML =
+    "Hasil : " + hasil;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Switch Case Kompleks</title>
+</head>
+<body>
+
+<script>
+    let menu = 3;
+    let harga = 0;
+
+    switch(menu) {
+        case 1:
+            harga = 10000;
+            console.log("Nasi Goreng");
+            break;
+
+        case 2:
+            harga = 12000;
+            console.log("Mie Goreng");
+            break;
+
+        case 3:
+            harga = 15000;
+            console.log("Ayam Geprek");
+            break;
+
+        case 4:
+            harga = 8000;
+            console.log("Es Teh");
+            break;
+
+        default:
+            console.log("Menu tidak tersedia");
+    }
+
+    if(harga > 0){
+        console.log("Harga : Rp " + harga);
+    }
+</script>
+
+</body>
+</html>
