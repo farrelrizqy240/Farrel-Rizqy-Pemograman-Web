@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Case Operator - Farrel Rizqy</title>
+</head>
+<body>
+
+    <h1>Belajar Operator JavaScript</h1>
+
+    <script>
+        // Case: Menghitung total belanja perangkat kerja Farrel Rizqy
+
+        // 1. Inisialisasi Variabel (Menggunakan var, let, const)
+        var namaPembeli = "Farrel Rizqy";
+        let hargaLaptop = 7500000;
+        let hargaMouse = 250000;
+        const diskonMember = 0.05; // Diskon 5%
+        let batasMinimalGratisOngkir = 8000000;
+
+        let jumlahLaptop = 1;
+        let jumlahMouse = 2;
+
+        // 2. Implementasi OPERATOR ARITMATIKA (*, +, -)
+        // Hitung total harga semua barang sebelum diskon
+        let totalSebelumDiskon = (hargaLaptop * jumlahLaptop) + (hargaMouse * jumlahMouse);
+
+        // Hitung potongan diskon dan total setelah diskon
+        let potonganHarga = totalSebelumDiskon * diskonMember;
+        let totalSetelahDiskon = totalSebelumDiskon - potonganHarga;
+
+        // 3. Implementasi OPERATOR PENUGASAN (+=)
+        // Ditambah biaya asuransi pengiriman sebesar Rp25.000
+        let totalAkhirBayar = totalSetelahDiskon;
+        totalAkhirBayar += 25000;
+
+        // 4. Implementasi OPERATOR PEMBANDING (>=)
+        // Cek apakah total belanja Farrel memenuhi syarat gratis ongkir
+        let dapatGratisOngkir = totalAkhirBayar >= batasMinimalGratisOngkir;
+
+        // Output ke console (Persis gaya modul)
+        console.log("Nama Pembeli: " + namaPembeli);
+        console.log("Total Sebelum Diskon: Rp" + totalSebelumDiskon);
+        console.log("Diskon Member (" + (diskonMember * 100) + "%): Rp" + potonganHarga);
+        console.log("Total Setelah Diskon: Rp" + totalSetelahDiskon);
+        console.log("Total Akhir + Asuransi (Penugasan): Rp" + totalAkhirBayar);
+        console.log("Apakah Farrel Dapat Gratis Ongkir? " + dapatGratisOngkir);
+    </script>
+
+</body>
+</html>
